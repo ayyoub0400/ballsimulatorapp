@@ -22,6 +22,7 @@ on:
 jobs:
   security-scan:
     runs-on: ubuntu-latest
+    if: github.event.inputs.action != 'Destroy'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -35,6 +36,7 @@ jobs:
 
   docker-build:
     runs-on: ubuntu-latest
+    if: github.event.inputs.action != 'Destroy'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -55,6 +57,7 @@ jobs:
   terraform-apply:
     needs: [docker-build, security-scan]
     runs-on: ubuntu-latest
+    if: github.event.inputs.action != 'Destroy'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -115,10 +118,15 @@ jobs:
       - name: Terraform Init
         run: |
           cd terraform
-          terraform init terraform
+          terraform init
+    
+      - name: Terraform Validate
+        run: |
+          cd terraform
+          terraform validate
       
       - name: Terraform Destroy
         run: |
           cd terraform
-          terraform destroy -auto-approve terraform
+          terraform destroy -auto-approve
 
