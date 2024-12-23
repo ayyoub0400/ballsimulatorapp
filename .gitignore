@@ -1,0 +1,17 @@
+# Terraform files
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+
+# Terraform lock files
+.terraform.lock.hcl
+
+# Checkov and other scanning tool outputs
+checkov-results.sarif
+
+# Provider executables
+.terraform/providers/*
+*.exe
+*.dll
