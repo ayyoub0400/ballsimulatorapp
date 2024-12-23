@@ -62,30 +62,36 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          cli_config_credentials_token: ${{ secrets.TF_CLOUD_TOKEN }}
-          terraform_version: 1.5.7
+        cli_config_credentials_token: ${{ secrets.TF_CLOUD_TOKEN }}
+        terraform_version: 1.5.7
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
       - name: Terraform Init
-        run: |
-          -chdir terraform
-          terraform init terraform
+      run: |
+        cd terraform
+        terraform init
+    
+    - name: Terraform Validate
+      run: |
+        cd terraform
+        terraform validate
+    
+    - name: Terraform Plan
+      run: |
+        cd terraform
+        terraform plan
+    
+    - name: Terraform Apply
+      run: |
+        cd terraform
+        terraform apply -auto-approve -var="docker_username=${{ secrets.DOCKER_USERNAME }}" -var="docker_image=physicswebapp"
 
-      - name: Terraform Validate
-        run: |
-          -chdir terraform 
-          terraform validate terraform
-
-      - name: Terraform APPLY
-        run: |
-          -chdir terraform
-          terraform apply -auto-approve terraform
 
   terraform-destroy:
     if : github.event.inputs.action == 'Destroy'
@@ -108,11 +114,11 @@ jobs:
 
       - name: Terraform Init
         run: |
-          -chdir terraform
+          cd terraform
           terraform init terraform
       
       - name: Terraform Destroy
         run: |
-          -chdir terraform
+          cd terraform
           terraform destroy -auto-approve terraform
 
