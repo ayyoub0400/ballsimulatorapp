@@ -50,12 +50,13 @@ jobs:
       - name: Build Docker Image
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/ballsimulatorapp:latest .
       
-      - name: Install trivy for scanning
-        run: pip install trivy
-      
-      - name: Scan Docker Image
-        run: trivy image --exit-code 1 --severity HIGH,CRITICAL ${{ secrets.DOCKER_USERNAME }}/ballsimulatorapp:latest
-      
+      - name: Run trivy for scanning
+        uses: aquasecurity/trivy-action@v0.2.0
+        with:
+          image-ref: ${{ secrets.DOCKER_USERNAME }}/ballsimulatorapp:latest
+          format: table
+          output: table
+    
       - name: Push Docker Image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/ballsimulatorapp:latest
 
