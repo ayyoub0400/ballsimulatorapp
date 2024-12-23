@@ -75,4 +75,25 @@ The GitHub Actions workflow does the following:
 
 ## Project Structure
 ```
-TBC
+ballsimulatorapp/
+├── .github/
+│   └── workflows/
+│       └── ci-cd.yml
+├── app/
+│   ├── static/
+│   │   ├── css/
+│   │   └── js/
+│   ├── templates/
+│   │   └── index.html
+│   └── app.py
+├── infrastructure/
+│   ├── main.tf
+│   ├── variables.tf
+│   └── outputs.tf
+├── .gitignore
+├── Dockerfile
+├── README.md
+└── requirements.txt
+```
+
+For detailed setup instructions, refer to the documentation in each component's directory.
