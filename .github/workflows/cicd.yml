@@ -77,20 +77,20 @@ jobs:
           cd terraform
           terraform init
     
-    - name: Terraform Validate
-      run: |
-        cd terraform
-        terraform validate
-    
-    - name: Terraform Plan
-      run: |
-        cd terraform
-        terraform plan
-    
-    - name: Terraform Apply
-      run: |
-        cd terraform
-        terraform apply -auto-approve -var="docker_username=${{ secrets.DOCKER_USERNAME }}" -var="docker_image=physicswebapp"
+      - name: Terraform Validate
+        run: |
+          cd terraform
+          terraform validate
+      
+      - name: Terraform Plan
+        run: |
+          cd terraform
+          terraform plan
+      
+      - name: Terraform Apply
+        run: |
+          cd terraform
+          terraform apply -auto-approve
 
 
   terraform-destroy:
