@@ -74,17 +74,17 @@ jobs:
 
       - name: Terraform Init
         run: |
-          cd terraform
+          -chdir terraform
           terraform init terraform
 
       - name: Terraform Validate
         run: |
-          cd terraform 
+          -chdir terraform 
           terraform validate terraform
 
       - name: Terraform APPLY
         run: |
-          cd terraform
+          -chdir terraform
           terraform apply -auto-approve terraform
 
   terraform-destroy:
@@ -108,11 +108,11 @@ jobs:
 
       - name: Terraform Init
         run: |
-          cd terraform
+          -chdir terraform
           terraform init terraform
       
       - name: Terraform Destroy
         run: |
-          cd terraform
+          -chdir terraform
           terraform destroy -auto-approve terraform
 
